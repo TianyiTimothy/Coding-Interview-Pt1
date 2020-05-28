@@ -31,9 +31,6 @@
   position: relative;
 }
 
-.members__member{
-  padding-bottom: 40px;
-}
 
 .members__member_img{
   border-radius: 50%;
@@ -41,6 +38,7 @@
   display: block;
   width: 50%;
   margin: 5% auto;
+  object-fit: cover;
 }
 .members__member_name{
   text-align: center;
@@ -52,7 +50,7 @@
 }
 
 .members__member_roles{
-  position: absolute;
+  position: relative;
   bottom: 10px;
 }
 
@@ -73,4 +71,10 @@
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+@media screen and (max-width: 768px){
+  *{
+    font-size: 7vw;
+  }
 }

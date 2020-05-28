@@ -54,11 +54,9 @@ function createMemberElement(member) {
         </div>
       </div>
   */
-  console.log(member);
+  // console.log(member);
   const memberImgUrlStart = "http://sandbox.bittsdevelopment.com/code1/employeepics/";
   const memberImgUrlEnd = ".jpg";
-
-  // todo: employeehaspic
 
   // member parent node
   const members__member = createNode("div");
@@ -67,7 +65,13 @@ function createMemberElement(member) {
   // img
   const members__member_img = createNode("img");
   members__member_img.className = "members__member_img";
-  members__member_img.src = memberImgUrlStart + member.employeeid + memberImgUrlEnd;
+
+  // not clever setting the height.
+  // members__member_img.style.height = "125px";
+  // check if employeehaspic
+  members__member_img.src = member.employeehaspic?
+    memberImgUrlStart + member.employeeid + memberImgUrlEnd : 
+    "src/images/dontpanic.jpg";
   members__member_img.alt = "member number " + member.employeeid;
   // append to member parent node
   appendNode(members__member, members__member_img);
