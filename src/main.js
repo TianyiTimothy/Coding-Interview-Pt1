@@ -2,7 +2,7 @@ window.onload = function () {
   // urls
   // params: roles=id1,id2,id3 => roles=1,3,5
   const allEmployeesUrl = "http://sandbox.bittsdevelopment.com/code1/fetchemployees.php";
-  const allRolesUrl = "http://sandbox.bittsdevelopment.com/code1/fetchroles.php";
+  // const allRolesUrl = "http://sandbox.bittsdevelopment.com/code1/fetchroles.php";
   // vars
   const membersDOM = document.getElementById("members");
 
@@ -15,20 +15,18 @@ window.onload = function () {
       const index = employeeid + "";
       const employee = employees[index];
 
+      // create an element for each member, and append it to membersDOM
       membersDOM.appendChild(createMemberElement(employee));
     }
-
-  });
-  // const roles = getDataFrom(allRolesUrl);
-
+  })
+  .catch(function (error) {
+    alert(error);
+  });;
 }
 
 async function getDataFrom(url) {
   const response = await fetch(url);
-  return response.json()
-    .catch(function (error) {
-      alert(error);
-    });
+  return response.json();
 }
 
 function createNode(element) {
@@ -40,21 +38,7 @@ function appendNode(parent, child) {
 }
 
 function createMemberElement(member) {
-  /*
-      <div class="flexible members" id="members">
-        <div class="flexItem members__member">
-          <span class="members__member_crown">👑</span>
-          <img class="members__member_img" src="1.jpg" alt="member_1">
-          <h2 class="members__member_name">Christine Bittle</h2>
-          <p class="members__member_description">Web Enthusiast</p>
-          <div class="members__member_roles">
-            <div class="members__member_roles_role">Coding</div>
-            <div class="members__member_roles_role">Coding</div>
-          </div>
-        </div>
-      </div>
-  */
-  // console.log(member);
+  // url for member image
   const memberImgUrlStart = "http://sandbox.bittsdevelopment.com/code1/employeepics/";
   const memberImgUrlEnd = ".jpg";
 
@@ -65,9 +49,6 @@ function createMemberElement(member) {
   // img
   const members__member_img = createNode("img");
   members__member_img.className = "members__member_img";
-
-  // not clever setting the height.
-  // members__member_img.style.height = "125px";
   // check if employeehaspic
   members__member_img.src = member.employeehaspic?
     memberImgUrlStart + member.employeeid + memberImgUrlEnd : 
@@ -116,7 +97,6 @@ function createMemberElement(member) {
     members__member_crown.innerText="👑";
   }
 
-
   return members__member;
 }
 
@@ -151,3 +131,18 @@ function createMemberElement(member) {
   // };
   // request.open('GET', allEmployeesUrl, true);
   // request.send();
+
+  /*  HTML for one member:
+      <div class="flexible members" id="members">
+        <div class="flexItem members__member">
+          <span class="members__member_crown">👑</span>
+          <img class="members__member_img" src="1.jpg" alt="member_1">
+          <h2 class="members__member_name">Christine Bittle</h2>
+          <p class="members__member_description">Web Enthusiast</p>
+          <div class="members__member_roles">
+            <div class="members__member_roles_role">Coding</div>
+            <div class="members__member_roles_role">Coding</div>
+          </div>
+        </div>
+      </div>
+  */
