@@ -120,9 +120,11 @@ function createRoleElement(role) {
       // all role checkbox
       const roleCheckboxes = document.getElementsByClassName("roles__role_checkbox");
       allCheckedFlag = true;
-      for (roleCheckbox of roleCheckboxes) {
-        if (roleCheckbox.checked === false) {
+      // start from 1
+      for (let i=1;i<roleCheckboxes.length;i++) {
+        if (roleCheckboxes[i].checked === false) {
           allCheckedFlag = false;
+          break;
         }
       }
       if (allCheckedFlag) {
@@ -216,18 +218,26 @@ function displayMembersFrom(url) {
     });
 }
 
-function allRolesChanged(allRolesInput) {
+function allRolesChanged(allRolesCheckbox) {
 
-  // check all roles
   const roles__role_checkboxes = document.getElementsByClassName("roles__role_checkbox");
-  for(roles__role_checkbox of roles__role_checkboxes){
-    // check if not checked
-    roles__role_checkbox.checked=true;
+  if(allRolesCheckbox.checked){
+    // check all roles
+    for(roles__role_checkbox of roles__role_checkboxes){
+      // check if not checked
+      roles__role_checkbox.checked=true;
+    }
+  }else{
+    // un check all roles
+    for(roles__role_checkbox of roles__role_checkboxes){
+      // check if not checked
+      roles__role_checkbox.checked=false;
+    }
   }
-
   // show all members
   displayMembersFrom(allEmployeesUrl);
 }
+
 
 // below: path I walked
 
