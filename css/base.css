@@ -1,10 +1,11 @@
 #body{
   margin: 0;
   padding: 0;
+  background-color: #FFFFF4;
 }
 #header{
   height: 50px;
-  background-color: bisque;
+  background-color: #FFE4C4;
 }
 #footer{
   height: 300px;
@@ -31,6 +32,18 @@
   position: relative;
 }
 
+.members{
+  position: relative;
+  user-select: none;
+}
+
+.members__member{
+  background-color: #F6F6F6;
+  transition: all 1s;
+}
+.members__member:hover{
+  background-color: #FFF;
+}
 
 .members__member_img{
   border-radius: 50%;
@@ -47,6 +60,25 @@
 .members__member_description{
   padding: 0 15px;
   display: block;
+  height: 80px;
+  min-height: 80px;
+  overflow-y: hidden;
+}
+
+.members__member >.members__member_descriptioncard{
+  overflow: hidden;
+  background-color: white;
+  position: absolute;
+  padding: 5px;
+  top: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  height: calc(100% - 50px);
+  width: calc(100% - 10px);
+  
+}
+.members__member:hover >.members__member_descriptioncard{
+  opacity: 1;
 }
 
 .members__member_roles{
@@ -56,7 +88,6 @@
 
 .members__member_roles_role{
   display: inline-block;
-  color: white;
   text-align: center;
   background: purple;
   /* default bgcolor */
@@ -71,6 +102,43 @@
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+.members__errorMsg{
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.roles{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 15px 0;
+  margin-bottom: 15px;
+  background-color: #EEE;
+}
+.roles .roles__role {
+  display: inline-block;
+  margin-left: 15px;
+}
+.roles .roles__role .roles__role_label{
+  padding: 5px;
+  border: #AAA 1px solid;
+  border-radius: 15px;
+  cursor: pointer;
+  user-select: none;
+  background-color: #EEE;
+  color: #AAA;
+  transition: background-color 0.3s;
+}
+.roles .roles__role .roles__role_checkbox:checked + .roles__role_label{
+  background-color: #fbD0C2;
+  border: black 1px solid;
+  color: black;
+}
+.roles .roles__role .roles__role_checkbox{
+    position: absolute;
+    left: -9999px;
 }
 
 @media screen and (max-width: 768px){
