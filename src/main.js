@@ -1,10 +1,16 @@
+
+
 // urls
 // params: roles=id1,id2,id3 => roles=1,3,5
 const allEmployeesUrl = "http://sandbox.bittsdevelopment.com/code1/fetchemployees.php";
 const allRolesUrl = "http://sandbox.bittsdevelopment.com/code1/fetchroles.php";
 
 window.onload = function () {
+
+  // hi Christine. here's what main.js do:
+  // for navbar:
   displayRolesFrom(allRolesUrl);
+  // for members:
   displayMembersFrom(allEmployeesUrl);
 }
 
@@ -55,7 +61,7 @@ function createMemberElement(member) {
   members__member_description.innerText = member.employeebio;
   // append
   appendNode(members__member, members__member_description);
-  
+
   // description_card (div)
   const members__member_descriptioncard = createNode("div");
   members__member_descriptioncard.className = "members__member_descriptioncard";
@@ -81,9 +87,9 @@ function createMemberElement(member) {
   appendNode(members__member, members__member_roles);
 
   // employeeisfeatured ? crown:none
-  if (member.employeeisfeatured==="1") {
+  if (member.employeeisfeatured === "1") {
     const members__member_crown = createNode("span");
-    members__member_crown.className="members__member_crown";
+    members__member_crown.className = "members__member_crown";
     members__member_crown.innerText = "👑";
     // append
     appendNode(members__member, members__member_crown);
@@ -94,6 +100,7 @@ function createMemberElement(member) {
 
 function createRoleElement(role) {
 
+  // HTML for a single role: 
   // <div class="roles__role">
   //   <input class="roles__role_checkbox" type="checkbox" name="allroles" id="allroles">
   //   <label class="roles__role_label" for="allroles">ALL ROLES</label>
@@ -110,6 +117,8 @@ function createRoleElement(role) {
   roles__role_checkbox.name = role.roleid;
   roles__role_checkbox.id = role.roleid;
   roles__role_checkbox.value = role.roleid;
+  // default: checked
+  roles__role_checkbox.checked = true;
   // check <input>
   roles__role_checkbox.addEventListener("change", function () {
 
@@ -121,7 +130,7 @@ function createRoleElement(role) {
       const roleCheckboxes = document.getElementsByClassName("roles__role_checkbox");
       allCheckedFlag = true;
       // start from 1
-      for (let i=1;i<roleCheckboxes.length;i++) {
+      for (let i = 1; i < roleCheckboxes.length; i++) {
         if (roleCheckboxes[i].checked === false) {
           allCheckedFlag = false;
           break;
@@ -146,14 +155,13 @@ function createRoleElement(role) {
       if (roles__role_checkbox.checked) {
         // get id from roleinput.value
         getEmployeesByRolesUrl += roles__role_checkbox.value + ",";
-      }else{
+      } else {
         allCheckboxChecked = false;
       }
     }
-    if(allCheckboxChecked){
+    if (allCheckboxChecked) {
       const allrolesDOM = document.getElementById("allroles");
       allrolesDOM.checked;
-      console.log(allrolesDOM);
     }
     // delete the last comma
     getEmployeesByRolesUrl = getEmployeesByRolesUrl.substr(0, getEmployeesByRolesUrl.length - 1);
@@ -174,18 +182,19 @@ function createRoleElement(role) {
 
   return roles__role;
 }
-function displayRolesFrom(url){
+function displayRolesFrom(url) {
   // roles in checkbox
   this.getDataFrom(url).then((roles) => {
     const rolesDOM = document.getElementById("roles");
-    // use for in to "iterate" an object
+    // use for in to "iterate" roles
     for (role of roles) {
+      // create a role element based on data requested from roles url
       appendNode(rolesDOM, createRoleElement(role));
     }
-  }).catch(error=>{
+  }).catch(error => {
     const rolesDOM = document.getElementById("roles");
     // remove roles
-    rolesDOM.innerHTML="&nbsp;<em>Is your code robust enough?</em> --Christine";
+    rolesDOM.innerHTML = "&nbsp;<em>Is your code robust enough?</em> --Christine Bittle";
     // rolesDOM.innerHTML="<em>Don't forget to submit your reflection.</em> --Christine";
     console.log(error);
   });
@@ -210,8 +219,8 @@ function displayMembersFrom(url) {
       // show error message to users
       const membersDOM = document.getElementById("members");
       const errorMsg = createNode("div");
-      errorMsg.className="members__errorMsg";
-      errorMsg.innerText="Sorry, failed to fetch members from API";
+      errorMsg.className = "members__errorMsg";
+      errorMsg.innerText = "Sorry, failed to fetch members from API";
       appendNode(membersDOM, errorMsg);
 
       console.log(error);
@@ -221,22 +230,26 @@ function displayMembersFrom(url) {
 function allRolesChanged(allRolesCheckbox) {
 
   const roles__role_checkboxes = document.getElementsByClassName("roles__role_checkbox");
-  if(allRolesCheckbox.checked){
+  const roles__role_labels = document.getElementsByClassName("roles__role_label");
+  if (allRolesCheckbox.checked) {
     // check all roles
-    for(roles__role_checkbox of roles__role_checkboxes){
+    for (roles__role_checkbox of roles__role_checkboxes) {
       // check if not checked
-      roles__role_checkbox.checked=true;
+      roles__role_checkbox.checked = true;
     }
-  }else{
-    // un check all roles
-    for(roles__role_checkbox of roles__role_checkboxes){
-      // check if not checked
-      roles__role_checkbox.checked=false;
+  } else {
+    // uncheck all roles
+    for(let i=0;i<roles__role_checkboxes.length;i++){
+      // unset background color
+      roles__role_labels[i].style.backgroundColor = "";
+      // uncheck
+      roles__role_checkboxes[i].checked = false;
     }
   }
   // show all members
   displayMembersFrom(allEmployeesUrl);
 }
+
 
 
 // below: path I walked
@@ -286,4 +299,23 @@ function allRolesChanged(allRolesCheckbox) {
         </div>
       </div>
     </div>
+*/
+
+/*  modulirazation
+  // modulirazation, fake commonJS, use "requireJs" instead of commonJS require
+  const _ = requireJs('test');
+
+  // require function
+  function requireJs(src){
+    if(!src.endsWith(".js")){
+      src+=".js";
+    }
+    console.log(src);
+
+    var newscript = document.createElement('script');
+    newscript.setAttribute('type','text/javascript');
+    newscript.setAttribute('src','src/'+src);
+    var head = document.getElementsByTagName('head')[0];
+    head.appendChild(newscript);
+  }
 */
