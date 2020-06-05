@@ -1,5 +1,3 @@
-
-
 // urls
 // params: roles=id1,id2,id3 => roles=1,3,5
 const allEmployeesUrl = "http://sandbox.bittsdevelopment.com/code1/fetchemployees.php";
@@ -121,6 +119,8 @@ function createRoleElement(role) {
   roles__role_checkbox.checked = true;
   // check <input>
   roles__role_checkbox.addEventListener("change", function () {
+    // clear search text
+    document.getElementById("searchText").value="";
 
     let getEmployeesByRolesUrl = allEmployeesUrl + "?roles=";
 
@@ -199,20 +199,36 @@ function displayRolesFrom(url) {
     console.log(error);
   });
 }
-function displayMembersFrom(url) {
+function displayMembersFrom(url, memberNameKeyword = null) {
   getDataFrom(url).then(function (employees) {
     const membersDOM = document.getElementById("members");
     // clear current members
     membersDOM.innerHTML = "";
 
-    // use for in to "iterate" an object
-    for (employeeid in employees) {
-      // type of index is string
-      const index = employeeid + "";
-      const employee = employees[index];
+    if (memberNameKeyword) {
+      memberNameKeyword = memberNameKeyword.toLowerCase();
+      // use for in to "iterate" an object
+      for (employeeid in employees) {
+        // type of index is string
+        const index = employeeid + "";
+        const employee = employees[index];
+        const name = employee.employeefname.toLowerCase() + " " + employee.employeelname.toLowerCase();
+        if (name.indexOf(memberNameKeyword) != -1) {
+          // create an element for each member, and append it to membersDOM
+          appendNode(membersDOM, createMemberElement(employee));
+        }
+      }
+    } else {
+      // no membername keyword
+      // use for in to "iterate" an object
+      for (employeeid in employees) {
+        // type of index is string
+        const index = employeeid + "";
+        const employee = employees[index];
 
-      // create an element for each member, and append it to membersDOM
-      appendNode(membersDOM, createMemberElement(employee));
+        // create an element for each member, and append it to membersDOM
+        appendNode(membersDOM, createMemberElement(employee));
+      }
     }
   })
     .catch(function (error) {
@@ -231,6 +247,8 @@ function allRolesChanged(allRolesCheckbox) {
 
   const roles__role_checkboxes = document.getElementsByClassName("roles__role_checkbox");
   const roles__role_labels = document.getElementsByClassName("roles__role_label");
+  // clear search text
+  document.getElementById("searchText").value="";
   if (allRolesCheckbox.checked) {
     // check all roles
     for (roles__role_checkbox of roles__role_checkboxes) {
@@ -239,7 +257,7 @@ function allRolesChanged(allRolesCheckbox) {
     }
   } else {
     // uncheck all roles
-    for(let i=0;i<roles__role_checkboxes.length;i++){
+    for (let i = 0; i < roles__role_checkboxes.length; i++) {
       // unset background color
       roles__role_labels[i].style.backgroundColor = "";
       // uncheck
@@ -248,6 +266,17 @@ function allRolesChanged(allRolesCheckbox) {
   }
   // show all members
   displayMembersFrom(allEmployeesUrl);
+}
+
+function searchMembers(value) {
+  if (value != "") {
+    displayMembersFrom(allEmployeesUrl, value);
+  }
+  
+  displayMembersFrom(allEmployeesUrl);
+
+  // no refresh
+  return false;
 }
 
 

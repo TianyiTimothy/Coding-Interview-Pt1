@@ -14,6 +14,10 @@
   <main id="main">
     <div class="container">
       <h1>Team Members</h1>
+      <form action="#" class="search" id="search" onsubmit="searchMembers(document.getElementById('searchText').value)">
+        <input class="search__searchText" id="searchText" type="text" />
+        <input class="search__searchBtn" id="searchBtn" type="submit" value="SEARCH" />
+      </form>
       <div class="roles" id="roles">
         <div class="roles__role">
           <input class="roles__role_checkbox" type="checkbox" name="allroles" id="allroles" checked
@@ -26,8 +30,6 @@
       </select> -->
       <div class="flexible members" id="members">
       </div> 
-
-
     </div>
   </main>
   <footer id="footer"></footer>
